@@ -1,0 +1,17 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Backend configs (optional but recommended)
+backend/*.hcl
+
+# Databricks bundles
+.databricks/
+.bundle/
+dist/
+
+# Secrets
+*.tfvars
+*.env
