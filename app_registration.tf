@@ -19,9 +19,9 @@ resource "azuread_application_password" "svc_secret" {
   end_date_relative = "2160h" # 90 days
 }
 
-# Store Service Principal Secret in Key Vault
+# Store Service Principal Secret in Key Vault - this is for other services, not github action authentication.
 resource "azurerm_key_vault_secret" "svc_app_secret" {
-  name         = "${var.company}-${var.environment}-svc-principal-secret"
+  name         = "${var.company}-svc-principal-secret"
   value        = azuread_application_password.svc_secret.value
   key_vault_id = azurerm_key_vault.kv.id
 

@@ -13,3 +13,7 @@ tags = {
 }
 
 kv_admin_group_name = "skylink-kv-admins"
+github_org  = "zbachore"
+github_repo = "dab_project"
+uc_catalog_name = "citibike_prd"
+uc_metastore_id = "15e40798-424b-40f2-add3-be0925f5b226"

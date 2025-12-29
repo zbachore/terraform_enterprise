@@ -52,6 +52,21 @@ variable "kv_admin_group_name" {
   description = "Entra ID group display name to grant Key Vault Administrator on this vault"
 }
 
+variable "uc_catalog_name" {
+  type        = string
+  description = "Unity Catalog catalog name to create/manage"
+}
 
+# Optional: container name for UC managed storage
+variable "uc_container_name" {
+  type        = string
+  description = "Container name for UC managed storage"
+  default     = "unity-catalog"
+}
+
+variable "uc_metastore_id" {
+  type        = string
+  description = "Unity Catalog metastore ID (GUID)."
+}
 
 
