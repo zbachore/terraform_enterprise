@@ -10,5 +10,6 @@
 .databricks/
 .bundle/
 dist/
+plans/
 
 

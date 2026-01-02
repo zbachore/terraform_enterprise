@@ -8,18 +8,35 @@ resource "azurerm_databricks_workspace" "ws" {
   name                = "${var.company}-${var.environment}-${var.location}-dbx-ws"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
+  sku                 = var. sku
+  public_network_access_enabled = var.public_network_access_enabled
+  network_security_group_rules_required = var.network_security_group_rules_required
 
-  sku  = var.sku
+  custom_parameters {
+    no_public_ip                                         = var.no_public_ip
+    virtual_network_id                                   = azurerm_virtual_network.databricks.id
+    public_subnet_name                                   = azurerm_subnet.public.name
+    private_subnet_name                                  = azurerm_subnet.private.name
+    public_subnet_network_security_group_association_id  = azurerm_subnet_network_security_group_association.public.id
+    private_subnet_network_security_group_association_id = azurerm_subnet_network_security_group_association.private.id
+  }
+
   tags = local.common_tags
+
+  depends_on = [
+    azurerm_subnet_network_security_group_association.public,
+    azurerm_subnet_network_security_group_association.private
+  ]
 }
 
 resource "azurerm_storage_account" "datalake" {
-  name                     = "${var.company}${var.environment}${var.location}datalake"
-  resource_group_name      = azurerm_resource_group.rg.name
+  name                     = "${var.company}${var.environment}${var.location}storage"
+  resource_group_name      = azurerm_resource_group. rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   is_hns_enabled           = true
+  public_network_access_enabled = var.storage_public_network_access_enabled
 
   tags = local.common_tags
 }

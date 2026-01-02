@@ -69,4 +69,52 @@ variable "uc_metastore_id" {
   description = "Unity Catalog metastore ID (GUID)."
 }
 
+variable "vnet_address_space" {
+  type        = list(string)
+  description = "Address space for the virtual network"
+}
+
+variable "public_subnet_address_prefix" {
+  type        = list(string)
+  description = "Address prefix for the public subnet"
+}
+
+variable "private_subnet_address_prefix" {
+  type        = list(string)
+  description = "Address prefix for the private subnet"
+}
+
+variable "public_network_access_enabled" {
+  type        = bool
+  description = "Whether public network access is enabled for the Databricks workspace"
+  default     = false
+}
+
+variable "network_security_group_rules_required" {
+  type        = string
+  description = "Whether Databricks should create NSG rules.  Options: 'AllRules' or 'NoAzureDatabricksRules'"
+  default     = "NoAzureDatabricksRules"
+  
+  validation {
+    condition     = contains(["AllRules", "NoAzureDatabricksRules"], var. network_security_group_rules_required)
+    error_message = "Must be either 'AllRules' or 'NoAzureDatabricksRules'."
+  }
+}
+
+variable "storage_public_network_access_enabled" {
+  type        = bool
+  description = "Whether public network access is enabled for storage account"
+  default     = true
+}
+
+variable "no_public_ip" {
+  description = "Enable Secure Cluster Connectivity (No Public IP). Set to false for public access during development."
+  type        = bool
+  default     = false  # Safe default for learning/dev environments
+}
+
+variable "azure_tenant_id" {
+  description = "Azure Tenant ID"
+  type        = string
+}
 
